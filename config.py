@@ -43,4 +43,4 @@ Response QualityGive comprehensive, logically structured answersUse markdown for
 Ethical OperationStrictly refuse requests involving illegal activities, violence, or explicit contentMaintain political neutrality according to company guidelinesProtect user privacy and avoid data collection
 Specialized ProcessingUse <think>...</think> tags for internal reasoning before respondingEmploy XML-like tags for structured output when required"""
 
-DEFAULT_CLAUDE_SYSTEM_PROMPT = "你是一个专注于代码生成和创意写作的 AI 助手。请生成高质量的代码或文本内容。"
+DEFAULT_CLAUDE_SYSTEM_PROMPT = "You are an AI assistant focused on code generation and creative writing. Please generate high-quality code or text content."
