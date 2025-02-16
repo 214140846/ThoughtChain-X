@@ -9,17 +9,24 @@ from config import DEFAULT_DEEPSEEK_SYSTEM_PROMPT, DEFAULT_CLAUDE_SYSTEM_PROMPT
 
 
 class ModelManager:
-    @staticmethod
-    def call_deepseek(prompt: str) -> Generator[str, None, None]:
+    def __init__(self, base_url=None, api_key=None):
+        self.api_client = APIClient(base_url, api_key)
+
+    def update_api_settings(self, url: str, key: str):
+        """更新API设置"""
+        self.api_client.base_url = url
+        self.api_client.api_key = key
+
+    def call_deepseek(self, prompt: str) -> Generator[str, None, None]:
         """调用DeepSeek模型"""
-        return APIClient.call_api(
+        return self.api_client.call_api(
             prompt=prompt,
             model="deepseek-reasoner",
             system_prompt=DEFAULT_DEEPSEEK_SYSTEM_PROMPT
         )
 
-    @staticmethod
     def call_claude(
+        self,
         prompt: str,
         deepseek_result: str = ""
     ) -> Generator[str, None, None]:
@@ -36,20 +43,20 @@ class ModelManager:
             system_prompt = DEFAULT_CLAUDE_SYSTEM_PROMPT
             full_prompt = prompt
 
-        return APIClient.call_api(
+        return self.api_client.call_api(
             prompt=full_prompt,
             model="claude-3-5-sonnet-20240620",
             system_prompt=system_prompt
         )
 
-    @staticmethod
     def call_model(
+        self,
         prompt: str,
         model: str,
         system_prompt: Optional[str] = None
     ) -> Generator[str, None, None]:
         """通用模型调用接口"""
-        return APIClient.call_api(
+        return self.api_client.call_api(
             prompt=prompt,
             model=model,
             system_prompt=system_prompt

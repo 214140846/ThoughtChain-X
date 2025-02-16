@@ -18,6 +18,7 @@ class UI:
         """更新API设置"""
         self.api_url = url
         self.api_key = key
+        self.model_manager.update_api_settings(url, key)
         return "API设置已更新", "success"
 
     def process_reasoner(self, prompt: str) -> str:
@@ -71,6 +72,7 @@ class UI:
                         lines=1
                     )
                 with gr.Column(scale=1):
+                    update_api_btn = gr.Button("更新API设置")
                     model_choice = gr.Dropdown(
                         label="选择模型",
                         choices=AVAILABLE_MODELS,
@@ -133,6 +135,13 @@ class UI:
                 inputs=[input_text],
                 outputs=[output_reasoner, output_result],
                 api_name="chain"
+            )
+
+            # 添加更新API设置的事件处理
+            update_api_btn.click(
+                fn=self.update_api_settings,
+                inputs=[api_url, api_key],
+                outputs=[gr.Textbox(visible=False), gr.Textbox(visible=False)]
             )
 
         return demo

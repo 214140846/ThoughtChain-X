@@ -12,7 +12,6 @@ def main():
     monitor_thread = threading.Thread(target=watch_file_changes)
     monitor_thread.daemon = True
     monitor_thread.start()
-
     # 启动UI
     launch_ui()
 
